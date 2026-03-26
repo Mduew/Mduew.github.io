@@ -394,23 +394,7 @@
             margin: 2rem 0;
         }
 
-        /* Resume section styles - Admin upload + public download */
-        .resume-upload-area {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem auto;
-            border: 2px dashed rgba(255,255,255,0.3);
-        }
-
-        .resume-upload-area h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
+        /* Resume section - Simple Download Card */
         .resume-download-card {
             background: rgba(255,255,255,0.08);
             backdrop-filter: blur(12px);
@@ -448,37 +432,13 @@
             border-radius: 50px;
             box-shadow: 0 8px 20px rgba(255,255,255,0.2);
             transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
         }
 
         .btn-download:hover {
             transform: scale(1.05);
             box-shadow: 0 15px 35px rgba(255,255,255,0.4);
-        }
-
-        .btn-replace {
-            background: rgba(100,100,120,0.8);
-            color: white;
-            margin-top: 1rem;
-            padding: 0.6rem 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .file-input-label {
-            background: rgba(255,255,255,0.2);
-            padding: 0.8rem 1.5rem;
-            border-radius: 40px;
-            cursor: pointer;
-            display: inline-block;
-            margin: 1rem 0;
-            transition: 0.2s;
-        }
-
-        .file-input-label:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        input[type="file"] {
-            display: none;
         }
 
         footer {
@@ -606,43 +566,23 @@
             <div class="cert-badge">🔌 Cisco Networking Basics</div>
             <div class="cert-badge">⏳ ITIL v4 Foundation (in progress)</div>
             <div class="cert-badge"> AZ-900</div>
-           
         </div>
     </section>
 
-    <!-- RESUME SECTION: Admin can upload first, then visitors download -->
+    <!-- RESUME SECTION - Simple Download Only -->
     <section id="resume">
         <h2>Resume / CV</h2>
-        
-        <!-- Admin Upload Panel (visible only when no resume is stored, or can be shown optionally) -->
-        <div id="resumeUploadPanel" class="resume-upload-area">
-            <h3>📤 Upload Your Resume (First Time Setup)</h3>
-            <p style="text-align: center; margin-bottom: 1rem; color: #aaa;">Upload your PDF resume once. Visitors will then be able to download it.</p>
-            <div style="text-align: center;">
-                <label class="file-input-label" for="resumeFileInput">📁 Choose PDF / DOC / DOCX</label>
-                <input type="file" id="resumeFileInput" accept=".pdf,.doc,.docx">
-                <button id="uploadResumeBtn" class="btn btn-primary" style="display: block; margin: 1rem auto 0;">Upload Resume</button>
+        <div class="resume-download-card">
+            <div class="resume-icon">📄</div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Mzamo Sithole - Resume</h3>
+            <div class="resume-info">
+                <p>📄 <strong>Format:</strong> PDF Document</p>
+                <p>📅 <strong>Last Updated:</strong> March 2025</p>
+                <p>💼 Complete professional history, technical skills, and certifications</p>
             </div>
-            <p style="font-size: 0.8rem; text-align: center; margin-top: 1rem; color: #888;">* Max file size 5MB. Once uploaded, it will be stored in your browser.</p>
-        </div>
-
-        <!-- Download Card (visible after upload) -->
-        <div id="resumeDownloadCard" style="display: none;">
-            <div class="resume-download-card">
-                <div class="resume-icon">📄</div>
-                <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Mzamo Sithole - Resume</h3>
-                <div class="resume-info" id="resumeMetaInfo">
-                    <p>📄 <strong>File:</strong> <span id="resumeFileName">—</span></p>
-                    <p>📅 <strong>Uploaded:</strong> <span id="resumeUploadDate">—</span></p>
-                    <p>💼 Complete professional history, skills & certifications</p>
-                </div>
-                <button id="downloadResumeBtn" class="btn btn-primary btn-download">
-                    ⬇️ Download Resume
-                </button>
-                <button id="replaceResumeBtn" class="btn btn-secondary btn-replace" style="margin-top: 1.5rem;">
-                   
-                </button>
-            </div>
+            <button id="downloadResumeBtn" class="btn-download">
+                ⬇️ Download Resume (PDF)
+            </button>
         </div>
     </section>
 
@@ -690,106 +630,35 @@
             });
         });
 
-        // ==================== RESUME MANAGEMENT (Upload & Download) ====================
-        let currentResume = null; // stores { name, dataUrl, uploadDate }
-
-        function loadResumeFromStorage() {
-            const stored = localStorage.getItem('mzamo_resume_data');
-            if(stored) {
-                currentResume = JSON.parse(stored);
-                showDownloadView();
-            } else {
-                showUploadView();
-            }
-        }
-
-        function showUploadView() {
-            document.getElementById('resumeUploadPanel').style.display = 'block';
-            document.getElementById('resumeDownloadCard').style.display = 'none';
-        }
-
-        function showDownloadView() {
-            document.getElementById('resumeUploadPanel').style.display = 'none';
-            document.getElementById('resumeDownloadCard').style.display = 'block';
-            if(currentResume) {
-                document.getElementById('resumeFileName').innerText = currentResume.name;
-                const dateObj = new Date(currentResume.uploadDate);
-                document.getElementById('resumeUploadDate').innerText = dateObj.toLocaleString();
-            }
-        }
-
-        function saveResumeToStorage(resumeObj) {
-            localStorage.setItem('mzamo_resume_data', JSON.stringify(resumeObj));
-            currentResume = resumeObj;
-            showDownloadView();
-        }
-
-        function handleResumeUpload(file) {
-            if(!file) return;
-            // Validate file type
-            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-            if(!allowedTypes.includes(file.type) && !file.name.match(/\.(pdf|doc|docx)$/i)) {
-                alert('Please upload a PDF, DOC, or DOCX file.');
-                return;
-            }
-            if(file.size > 5 * 1024 * 1024) {
-                alert('File size must be less than 5MB.');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const resumeData = {
-                    name: file.name,
-                    dataUrl: e.target.result,
-                    uploadDate: new Date().toISOString()
-                };
-                saveResumeToStorage(resumeData);
-                alert('Resume uploaded successfully! Visitors can now download it.');
-            };
-            reader.onerror = function() {
-                alert('Error reading file. Please try again.');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // Upload button logic
-        document.getElementById('uploadResumeBtn').addEventListener('click', function() {
-            const fileInput = document.getElementById('resumeFileInput');
-            if(fileInput.files.length === 0) {
-                alert('Please select a file first.');
-                return;
-            }
-            handleResumeUpload(fileInput.files[0]);
-        });
-
-        // Download button
-        document.getElementById('downloadResumeBtn').addEventListener('click', function() {
-            if(currentResume && currentResume.dataUrl) {
+        // ==================== RESUME DOWNLOAD ====================
+        // IMPORTANT: Replace the URL below with your actual resume file URL from GitHub
+        // Step 1: Upload your resume PDF to your GitHub repository
+        // Step 2: Get the raw file URL (right-click on the file in GitHub -> Copy raw link)
+        // Step 3: Replace the URL below with your actual link
+        
+        const RESUME_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO_NAME/main/Mzamo_Sithole_Resume.pdf";
+        const RESUME_FILENAME = "Mzamo_Sithole_Resume.pdf";
+        
+        function downloadResume() {
+            try {
                 const link = document.createElement('a');
-                link.href = currentResume.dataUrl;
-                link.download = currentResume.name;
+                link.href = RESUME_URL;
+                link.download = RESUME_FILENAME;
+                link.target = "_blank";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-            } else {
-                alert('No resume available. Please upload one first.');
+            } catch(e) {
+                console.error("Download failed:", e);
+                alert("Download failed. Please try again or contact me directly.");
             }
-        });
-
-        // Replace resume (admin can re-upload)
-        document.getElementById('replaceResumeBtn').addEventListener('click', function() {
-            // Show upload panel temporarily to replace
-            showUploadView();
-            document.getElementById('resumeFileInput').value = ''; // clear previous selection
-            // Also add a note that uploading will replace existing
-            const uploadPanel = document.getElementById('resumeUploadPanel');
-            const existingTitle = uploadPanel.querySelector('h3');
-            if(existingTitle) existingTitle.innerHTML = '🔄 Replace Existing Resume';
-            setTimeout(() => {
-                if(existingTitle) existingTitle.innerHTML = '📤 Upload Your Resume (First Time Setup)';
-            }, 3000);
-        });
+        }
+        
+        // Attach download event
+        const downloadBtn = document.getElementById('downloadResumeBtn');
+        if(downloadBtn) {
+            downloadBtn.addEventListener('click', downloadResume);
+        }
 
         // ==================== PROJECTS LOGIC ====================
         let projectsArray = [];
@@ -898,7 +767,6 @@
         initParticles();
         seedDefaultProjects();
         cleanStaticDefaults();
-        loadResumeFromStorage();
 
         // Intersection observer for fade-in
         const observer = new IntersectionObserver((entries) => {

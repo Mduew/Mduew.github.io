@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Mzamo Sithole • IT Professional | 3D Portfolio</title>
+    <title>Mzamo Sithole • IT Professional | Dual Project Sections</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,6 @@
             perspective: 1200px;
         }
 
-        /* dynamic 3D grid background */
         .bg-3d-grid {
             position: fixed;
             top: 0;
@@ -52,7 +51,6 @@
             100% { transform: rotateX(45deg) rotateZ(10deg) translateZ(-200px) translateX(200px) translateY(100px); }
         }
 
-        /* floating particles with depth */
         .particle-3d {
             position: fixed;
             width: 4px;
@@ -66,19 +64,12 @@
         }
 
         @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) translateX(0) translateZ(0) scale(0.2);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) translateX(0) translateZ(0) scale(0.2); opacity: 0; }
             20% { opacity: 0.8; }
             80% { opacity: 0.6; }
-            100% {
-                transform: translateY(-20vh) translateX(80px) translateZ(150px) scale(1);
-                opacity: 0;
-            }
+            100% { transform: translateY(-20vh) translateX(80px) translateZ(150px) scale(1); opacity: 0; }
         }
 
-        /* header glassmorphic */
         header {
             background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(16px);
@@ -86,7 +77,6 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: all 0.3s;
         }
 
         nav {
@@ -96,6 +86,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo {
@@ -106,8 +98,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 20px rgba(255,255,255,0.3);
-            transition: transform 0.2s;
         }
 
         .nav-links {
@@ -123,7 +113,6 @@
             font-weight: 500;
             font-size: 0.9rem;
             transition: 0.2s;
-            position: relative;
         }
 
         .nav-links a:hover {
@@ -131,7 +120,39 @@
             text-shadow: 0 0 6px white;
         }
 
-        /* hero */
+        .mode-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(8px);
+        }
+
+        .mode-badge {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .admin-login-btn, .admin-logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .admin-login-btn:hover, .admin-logout-btn:hover {
+            background: white;
+            color: black;
+        }
+
         .hero {
             max-width: 1300px;
             margin: 0 auto;
@@ -163,23 +184,20 @@
             font-weight: 300;
             color: #ccc;
             margin-bottom: 1.5rem;
-            letter-spacing: 2px;
         }
 
         .hero p {
             max-width: 750px;
             margin: 0 auto 2rem;
             color: #b0b0b0;
-            font-size: 1.1rem;
         }
 
         .btn {
             padding: 0.9rem 2rem;
             font-weight: 600;
             border: none;
-            background: transparent;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.3s;
             display: inline-block;
             text-decoration: none;
             font-size: 1rem;
@@ -191,21 +209,11 @@
             color: #000;
             box-shadow: 0 5px 20px rgba(255,255,255,0.3);
         }
-
-        .btn-primary:hover {
-            transform: translateY(-5px) translateZ(20px);
-            box-shadow: 0 15px 35px rgba(255,255,255,0.4);
-        }
-
+        .btn-primary:hover { transform: translateY(-5px); }
         .btn-secondary {
             border: 2px solid #fff;
             color: #fff;
             background: rgba(0,0,0,0.4);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-3px);
         }
 
         section {
@@ -221,41 +229,75 @@
             text-align: center;
             margin-bottom: 3rem;
             font-weight: 700;
-            letter-spacing: -1px;
             background: linear-gradient(135deg, #fff, #aaa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        /* cards */
+        .section-subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
         .glass-card {
             background: rgba(20, 20, 30, 0.5);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 24px;
-            transition: all 0.4s ease;
-            transform-style: preserve-3d;
         }
 
-        .about-content {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            padding: 2.8rem;
-            border-radius: 32px;
-            border: 1px solid rgba(255,255,255,0.2);
-            max-width: 950px;
-            margin: 0 auto;
-        }
-
-        .experience-card {
+        .about-content, .experience-card {
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(12px);
             padding: 2.5rem;
-            border-left: 5px solid white;
-            border-radius: 24px;
+            border-radius: 32px;
             max-width: 950px;
             margin: 0 auto;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .experience-card {
+            border-left: 5px solid white;
+        }
+
+        .editable-text {
+            transition: all 0.2s;
+        }
+        
+        .admin-mode .editable-text:hover {
+            background: rgba(0,255,200,0.1);
+            cursor: text;
+            outline: 1px dashed #00ffcc;
+            border-radius: 8px;
+        }
+        
+        .edit-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: #00ffcc;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 10;
+        }
+        
+        .admin-mode .edit-icon {
+            opacity: 0.7;
+        }
+        
+        .edit-icon:hover {
+            opacity: 1;
+            transform: scale(1.05);
         }
 
         .skills-grid {
@@ -271,36 +313,33 @@
             padding: 1.8rem;
             border: 1px solid rgba(255,255,255,0.1);
             transition: 0.3s;
+            position: relative;
         }
+        .skill-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.5); }
 
-        .skill-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            border-color: rgba(255,255,255,0.5);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        /* admin panel */
         .admin-panel {
-            background: rgba(10,10,20,0.7);
+            background: rgba(10,10,20,0.8);
             backdrop-filter: blur(16px);
             border-radius: 32px;
             padding: 2rem;
             margin-bottom: 3rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 20px rgba(0,255,200,0.2);
         }
-
-        .form-group input, .form-group textarea {
+        .admin-panel h3 { color: #00ffcc; margin-bottom: 1rem; }
+        .admin-panel h4 { color: #ffaa44; margin: 1rem 0 0.5rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #ddd; }
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 0.9rem;
             background: rgba(0,0,0,0.6);
             border: 1px solid rgba(255,255,255,0.3);
             border-radius: 20px;
             color: white;
-            font-size: 1rem;
         }
-
         .btn-add {
-            background: white;
+            background: #00ffcc;
             color: black;
             border-radius: 40px;
             padding: 0.8rem 2rem;
@@ -309,6 +348,20 @@
             cursor: pointer;
         }
 
+        .projects-section {
+            margin-bottom: 4rem;
+        }
+        
+        .projects-section h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, #ffaa44, #ff8844);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -323,26 +376,18 @@
             transition: 0.4s;
             border: 1px solid rgba(255,255,255,0.15);
         }
-
-        .project-card:hover {
-            transform: translateY(-15px) rotateX(4deg);
-            box-shadow: 0 30px 50px rgba(0,0,0,0.5);
-            border-color: #fff;
-        }
-
+        .project-card:hover { transform: translateY(-10px); border-color: #fff; }
         .project-image {
-            height: 200px;
+            height: 180px;
             background: linear-gradient(145deg, #222, #111);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3.5rem;
+            overflow: hidden;
         }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
+        .project-image img { width: 100%; height: 100%; object-fit: cover; }
+        .project-content { padding: 1.5rem; }
         .tag {
             background: rgba(255,255,255,0.15);
             padding: 0.3rem 0.9rem;
@@ -352,7 +397,6 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
-
         .btn-delete {
             background: rgba(200,60,60,0.8);
             border: none;
@@ -361,12 +405,17 @@
             margin-top: 1rem;
             cursor: pointer;
             color: white;
-            transition: 0.2s;
+            font-weight: bold;
         }
-
-        .btn-delete:hover {
-            background: rgba(220,70,70,1);
+        .project-type-badge {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-bottom: 0.8rem;
         }
+        .badge-professional { background: #3a6ea5; color: white; }
+        .badge-personal { background: #6a4e9b; color: white; }
 
         .cert-badge {
             background: rgba(20,20,30,0.6);
@@ -375,7 +424,7 @@
             padding: 1.5rem;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.2);
-            transition: 0.2s;
+            position: relative;
         }
 
         .contact {
@@ -385,7 +434,6 @@
             padding: 3rem 2rem;
             text-align: center;
         }
-
         .contact-info {
             display: flex;
             flex-wrap: wrap;
@@ -394,7 +442,6 @@
             margin: 2rem 0;
         }
 
-        /* Resume section - Simple Download Card */
         .resume-download-card {
             background: rgba(255,255,255,0.08);
             backdrop-filter: blur(12px);
@@ -404,41 +451,27 @@
             max-width: 650px;
             margin: 0 auto;
             border: 1px solid rgba(255,255,255,0.3);
-            transition: all 0.3s ease;
         }
-
-        .resume-download-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255,255,255,0.6);
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
-        }
-
-        .resume-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-
-        .resume-info {
-            margin: 1.5rem 0;
-            color: #ccc;
-        }
-
         .btn-download {
             background: linear-gradient(135deg, #ffffff, #e0e0e0);
             color: #000;
             padding: 1rem 2.5rem;
-            font-size: 1.1rem;
             font-weight: 700;
             border-radius: 50px;
-            box-shadow: 0 8px 20px rgba(255,255,255,0.2);
-            transition: all 0.3s;
-            display: inline-block;
-            text-decoration: none;
+            border: none;
+            cursor: pointer;
         }
 
-        .btn-download:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 35px rgba(255,255,255,0.4);
+        .view-only-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #aaa;
+            z-index: 99;
         }
 
         footer {
@@ -449,14 +482,52 @@
         }
 
         @media (max-width: 800px) {
-            .hero h1 { font-size: 2.8rem; }
-            .tagline { font-size: 1.3rem; }
-            h2 { font-size: 2.2rem; }
-            nav { flex-direction: column; gap: 1rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .tagline { font-size: 1.2rem; }
+            h2 { font-size: 2rem; }
+            nav { flex-direction: column; }
+        }
+        
+        .inline-edit-input {
+            width: 100%;
+            background: #1a1a2e;
+            border: 2px solid #00ffcc;
+            color: white;
+            padding: 8px;
+            border-radius: 12px;
+            font-size: inherit;
+            font-family: inherit;
+        }
+        
+        .save-btn {
+            background: #00ffcc;
+            color: black;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+        
+        .type-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .type-option {
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+        }
+        .type-option.active {
+            background: #00ffcc;
+            color: black;
         }
     </style>
 </head>
-<body>
+<body id="appBody">
     <div class="bg-3d-grid"><div class="grid-layer"></div></div>
     <div id="particleField"></div>
 
@@ -472,13 +543,17 @@
                 <li><a href="#resume">Resume</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="mode-control" id="modeControl">
+                <span class="mode-badge" id="modeStatus">👁️ View Mode</span>
+                <button id="adminToggleBtn" class="admin-login-btn">🔐 Admin Login</button>
+            </div>
         </nav>
     </header>
 
     <div class="hero">
-        <h1>Mzamo Mduduzi Comfort Sithole</h1>
-        <p class="tagline">IT Support Specialist → Network Engineer (In Progress)</p>
-        <p>Hands-on ITIL-aligned support | SCCM | Active Directory | Microsoft 365 | Currently advancing into Cisco networking & enterprise infrastructure.</p>
+        <h1 id="heroName">Mzamo Mduduzi Comfort Sithole</h1>
+        <p class="tagline" id="heroTagline">IT Support Specialist → Network Engineer (In Progress)</p>
+        <p id="heroDesc">Hands-on ITIL-aligned support | SCCM | Active Directory | Microsoft 365 | Currently advancing into Cisco networking.</p>
         <div class="cta-buttons">
             <a href="#contact" class="btn btn-primary">Connect</a>
             <a href="mailto:mzamo.mduduzi.comfort@gmail.com" class="btn btn-secondary">Email Me</a>
@@ -486,294 +561,351 @@
     </div>
 
     <section id="about">
-        <h2>Professional Summary</h2>
-        <div class="about-content glass-card">
-            <p>IT graduate with 1+ year of corporate desktop & helpdesk support (Sappi Southern Africa). Skilled in Windows troubleshooting, Microsoft 365 administration, Active Directory, BitLocker, SCCM deployments, and incident management (ITIL). Strong foundation in endpoint management and customer service. Currently preparing for Cisco certifications (CCNA track) to transition into network engineering.</p>
+        <h2 id="aboutTitle">Professional Summary</h2>
+        <div class="about-content glass-card" style="position: relative;">
+            <p id="aboutText">IT graduate with 1+ year of corporate desktop & helpdesk support (Sappi Southern Africa). Skilled in Windows troubleshooting, Microsoft 365 administration, Active Directory, BitLocker, SCCM deployments, and incident management (ITIL). Strong foundation in endpoint management. Currently preparing for Cisco certifications (CCNA track).</p>
+            <span class="edit-icon" data-target="aboutText">✏️ Edit</span>
         </div>
     </section>
 
     <section id="experience">
-        <h2>Work Experience</h2>
-        <div class="experience-card glass-card">
-            <h3 style="font-size: 1.8rem;">IT Operations Intern</h3>
-            <div style="color:#bbb;">Sappi Southern Africa, Durban | Feb 2024 – Jan 2025</div>
-            <ul style="margin-top: 1.2rem; list-style: none;">
+        <h2 id="expTitle">Work Experience</h2>
+        <div class="experience-card glass-card" style="position: relative;">
+            <h3 id="expRole" style="font-size: 1.8rem;">IT Operations Intern</h3>
+            <div id="expCompany" style="color:#bbb;">Sappi Southern Africa, Durban | Feb 2024 – Jan 2025</div>
+            <ul id="expList" style="margin-top: 1.2rem; list-style: none;">
                 <li>✓ Level 1-2 IT support across hardware, software, and network connectivity.</li>
                 <li>✓ Managed incidents & requests via ITIL ticketing system (SLA adherence).</li>
                 <li>✓ SCCM administrative tasks: software deployment, updates, device collections.</li>
                 <li>✓ BitLocker encryption management & recovery for endpoint security.</li>
                 <li>✓ Active Directory user administration: accounts, groups, permissions.</li>
                 <li>✓ Supported M365 (Outlook, Teams, OneDrive) for 200+ users.</li>
-                <li>✓ Documented technical procedures & inventory assets.</li>
             </ul>
+            <span class="edit-icon" data-target="expRole,expCompany,expList">✏️ Edit Experience</span>
         </div>
     </section>
 
     <section id="skills">
-        <h2>Technical Arsenal</h2>
-        <div class="skills-grid">
-            <div class="skill-card"><h3>🖥️ Desktop Support</h3><ul><li>Windows 10/11</li><li>Hardware Diagnostics</li><li>Peripheral Support</li><li>ITIL Framework</li></ul></div>
-            <div class="skill-card"><h3>☁️ M365 & AD</h3><ul><li>Exchange Online</li><li>Teams & OneDrive</li><li>Active Directory</li><li>Group Policy basics</li></ul></div>
-            <div class="skill-card"><h3>🔧 Endpoint Mgmt</h3><ul><li>SCCM Administration</li><li>BitLocker</li><li>Software Packaging</li><li>Patch Management</li></ul></div>
-            <div class="skill-card"><h3>🌐 Networking (in progress)</h3><ul><li>TCP/IP, VLANs</li><li>Cisco basics</li><li>LAN/Wi-Fi troubleshooting</li><li>Network fundamentals</li></ul></div>
+        <h2 id="skillsTitle">Technical Arsenal</h2>
+        <div class="skills-grid" id="skillsGrid"></div>
+        <div id="skillsAdminPanel" style="display: none; margin-top: 2rem;" class="admin-panel">
+            <h4>🛠️ Manage Skills Cards</h4>
+            <div id="skillsManager"></div>
+            <button id="addSkillBtn" class="btn-add">+ Add New Skill Card</button>
         </div>
     </section>
 
-    <!-- PROJECT MANAGER SECTION -->
+    <!-- PROJECTS SECTION WITH SEPARATE PERSONAL & PROFESSIONAL -->
     <section id="projects">
-        <h2>Featured Projects + Manager</h2>
-        <div class="admin-panel">
-            <h3>✨ Add New Project</h3>
+        <h2>Projects Portfolio</h2>
+        <p class="section-subtitle">Professional work experience projects + Personal learning experiments</p>
+        
+        <div id="projectsAdminPanel" style="display: none;" class="admin-panel">
+            <h3>✨ Admin Console — Add New Project</h3>
             <form id="projectForm">
-                <div class="form-group"><label>Project Name</label><input type="text" id="projName" placeholder="e.g., Network Monitoring Lab" required></div>
-                <div class="form-group"><label>Description</label><textarea id="projDesc" rows="2" placeholder="Describe your role, tech stack..."></textarea></div>
-                <div class="form-group"><label>Technologies (comma separated)</label><input type="text" id="projTech" placeholder="Cisco Packet Tracer, Windows Server" required></div>
-                <div class="form-group"><label>Icon (emoji)</label><input type="text" id="projIcon" maxlength="3" placeholder="🛜 / 💻"></div>
-                <div class="form-group"><label>Project Image (optional)</label><input type="file" id="projImage" accept="image/*"></div>
+                <div class="form-group"><label>Project Name</label><input type="text" id="projName" required></div>
+                <div class="form-group"><label>Description</label><textarea id="projDesc" rows="2"></textarea></div>
+                <div class="form-group"><label>Technologies (comma separated)</label><input type="text" id="projTech" required></div>
+                <div class="form-group"><label>Icon (emoji)</label><input type="text" id="projIcon" placeholder="🛜"></div>
+                <div class="form-group"><label>Project Type</label>
+                    <select id="projType">
+                        <option value="professional">💼 Professional Project (Work-related)</option>
+                        <option value="personal">🚀 Personal Project (Learning/Experiment)</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Project Image</label><input type="file" id="projImage" accept="image/*"></div>
                 <button type="submit" class="btn-add">➕ Deploy Project</button>
             </form>
         </div>
-        <div class="projects-grid" id="projectsGrid">
-            <div class="project-card" data-id="default1">
-                <div class="project-image">📡</div>
-                <div class="project-content">
-                    <h3>e-Docket System (UAT Support)</h3>
-                    <p>Participated in testing digital police docket system, workflow validation and user acceptance.</p>
-                    <div><span class="tag">Testing</span><span class="tag">Documentation</span></div>
-                    <button class="btn-delete" onclick="deleteProjectById('default1')">🗑 Remove</button>
-                </div>
-            </div>
-            <div class="project-card" data-id="default2">
-                <div class="project-image">🔧</div>
-                <div class="project-content">
-                    <h3>SCCM Software Deployment Automation</h3>
-                    <p>Optimized application deployment for 200+ endpoints, reducing manual effort by 30%.</p>
-                    <div><span class="tag">SCCM</span><span class="tag">PowerShell</span></div>
-                    <button class="btn-delete" onclick="deleteProjectById('default2')">🗑 Remove</button>
-                </div>
-            </div>
+        
+        <!-- Professional Projects Section -->
+        <div class="projects-section">
+            <h3>💼 Professional Projects</h3>
+            <div class="projects-grid" id="professionalProjectsGrid"></div>
+        </div>
+        
+        <!-- Personal Projects Section -->
+        <div class="projects-section">
+            <h3>🚀 Personal Projects & Labs</h3>
+            <div class="projects-grid" id="personalProjectsGrid"></div>
         </div>
     </section>
 
-    <!-- CERTIFICATIONS -->
     <section id="certifications">
-        <h2>Certifications & Learning</h2>
-        <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px,1fr));">
-            <div class="cert-badge">🎓 BSc IT - Richfield Graduate Institute</div>
-            <div class="cert-badge">📜 Google IT Support Professional</div>
-            <div class="cert-badge">🔒 IT Security: Defense against Digital Dark Arts</div>
-            <div class="cert-badge">🌐 Cisco Intro to Cybersecurity</div>
-            <div class="cert-badge">🔌 Cisco Networking Basics</div>
-            <div class="cert-badge">⏳ ITIL v4 Foundation (in progress)</div>
-            <div class="cert-badge"> AZ-900</div>
+        <h2 id="certsTitle">Certifications & Learning</h2>
+        <div class="skills-grid" id="certsGrid" style="grid-template-columns: repeat(auto-fit, minmax(240px,1fr));"></div>
+        <div id="certsAdminPanel" style="display: none; margin-top: 2rem;" class="admin-panel">
+            <h4>📜 Manage Certifications</h4>
+            <div id="certsManager"></div>
+            <button id="addCertBtn" class="btn-add">+ Add Certification</button>
         </div>
     </section>
 
-    <!-- RESUME SECTION - Simple Download Only -->
     <section id="resume">
         <h2>Resume / CV</h2>
         <div class="resume-download-card">
             <div class="resume-icon">📄</div>
-            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Mzamo Sithole - Resume</h3>
+            <h3>Mzamo Sithole - Resume</h3>
             <div class="resume-info">
-                <p>📄 <strong>Format:</strong> PDF Document</p>
-                <p>📅 <strong>Last Updated:</strong> March 2025</p>
-                <p>💼 Complete professional history, technical skills, and certifications</p>
+                <p>📄 Format: PDF Document | 📅 Updated: March 2025</p>
             </div>
-            <button id="downloadResumeBtn" class="btn-download">
-                ⬇️ Download Resume (PDF)
-            </button>
+            <button id="downloadResumeBtn" class="btn-download">⬇️ Download Resume (PDF)</button>
         </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact">
         <div class="contact">
             <h2>Let's Connect</h2>
-            <p>Open for IT support, junior network engineer roles & collaborations</p>
-            <div class="contact-info">
+            <p id="contactSub">Open for IT support, junior network engineer roles & collaborations</p>
+            <div class="contact-info" id="contactInfo">
                 <div><strong>📧</strong> mzamo.mduduzi.comfort@gmail.com</div>
                 <div><strong>📞</strong> 073 630 1020</div>
                 <div><strong>📍</strong> Durban, South Africa</div>
-                <div><strong>🚀</strong> Immediate Availability</div>
             </div>
             <a href="mailto:mzamo.mduduzi.comfort@gmail.com" class="btn btn-primary">Send Message</a>
+            <span class="edit-icon" data-target="contactSub,contactInfo" style="position: relative; display: inline-block; margin-left: 1rem;">✏️ Edit Contact</span>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 Mzamo Mduduzi Comfort Sithole | Code 10 (C1) | English & isiZulu | Aspiring Network Engineer</p>
+        <p id="footerText">© 2026 Mzamo Mduduzi Comfort Sithole | Code 10 (C1) | English & isiZulu | Aspiring Network Engineer</p>
     </footer>
+    <div class="view-only-badge" id="viewOnlyBadge">🔒 View-Only Mode • Resume Download Only</div>
 
     <script>
-        // 3D particles
-        function initParticles() {
-            const container = document.getElementById('particleField');
-            for(let i=0;i<60;i++) {
-                const p = document.createElement('div');
-                p.className = 'particle-3d';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.animationDelay = Math.random() * 15 + 's';
-                p.style.animationDuration = 8 + Math.random() * 10 + 's';
-                p.style.width = 2 + Math.random() * 5 + 'px';
-                p.style.height = p.style.width;
-                container.appendChild(p);
-            }
-        }
-
-        // smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // ==================== RESUME DOWNLOAD ====================
-        // IMPORTANT: Replace the URL below with your actual resume file URL from GitHub
-        // Step 1: Upload your resume PDF to your GitHub repository
-        // Step 2: Get the raw file URL (right-click on the file in GitHub -> Copy raw link)
-        // Step 3: Replace the URL below with your actual link
+        let isAdmin = false;
         
-        const RESUME_URL = "https://github.com/Mduew/Mduew.github.io/blob/main/Mzamo_Sithole_%20resume.pdf";
-        const RESUME_FILENAME = "Mzamo_Sithole_Resume.pdf";
-        
-        function downloadResume() {
-            try {
-                const link = document.createElement('a');
-                link.href = RESUME_URL;
-                link.download = RESUME_FILENAME;
-                link.target = "_blank";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } catch(e) {
-                console.error("Download failed:", e);
-                alert("Download failed. Please try again or contact me directly.");
-            }
-        }
-        
-        // Attach download event
-        const downloadBtn = document.getElementById('downloadResumeBtn');
-        if(downloadBtn) {
-            downloadBtn.addEventListener('click', downloadResume);
-        }
-
-        // ==================== PROJECTS LOGIC ====================
+        // Projects with type: 'professional' or 'personal'
         let projectsArray = [];
-
-        function loadProjectsFromStorage() {
-            const stored = localStorage.getItem('mzamo_projects');
-            if(stored) {
-                projectsArray = JSON.parse(stored);
-                projectsArray.forEach(proj => renderProjectCard(proj, false));
+        let skillsArray = [];
+        let certsArray = [];
+        
+        function loadAllData() {
+            // Load projects
+            const storedProjects = localStorage.getItem('mzamo_projects_separated');
+            if(storedProjects) projectsArray = JSON.parse(storedProjects);
+            else {
+                projectsArray = [
+                    { id: "prof1", name: "SCCM Software Deployment Optimization", desc: "Optimized application deployment for 200+ endpoints, reducing manual effort by 30%.", techs: ["SCCM", "PowerShell", "Windows"], icon: "📦", type: "professional", imageData: null },
+                    { id: "prof2", name: "Active Directory User Management Automation", desc: "Implemented PowerShell scripts for bulk user creation, group assignments, and automated onboarding.", techs: ["PowerShell", "Active Directory"], icon: "👥", type: "professional", imageData: null },
+                    { id: "personal1", name: "Cisco Packet Tracer Homelab", desc: "Built a virtual enterprise network with VLANs, OSPF, and inter-VLAN routing for CCNA practice.", techs: ["Cisco", "VLAN", "OSPF", "Packet Tracer"], icon: "🌐", type: "personal", imageData: null },
+                    { id: "personal2", name: "Home Media Server with Docker", desc: "Set up Jellyfin, Pi-hole, and network monitoring stack on Ubuntu server.", techs: ["Docker", "Linux", "Networking"], icon: "🐳", type: "personal", imageData: null },
+                    { id: "personal3", name: "Python Network Automation Scripts", desc: "Scripts to automate network device backup and configuration via Netmiko.", techs: ["Python", "Netmiko", "SSH"], icon: "🐍", type: "personal", imageData: null }
+                ];
+                saveProjects();
+            }
+            
+            // Load skills
+            const storedSkills = localStorage.getItem('mzamo_skills_v2');
+            if(storedSkills) skillsArray = JSON.parse(storedSkills);
+            else skillsArray = [
+                { id: "skill1", title: "🖥️ Desktop Support", items: ["Windows 10/11", "Hardware Diagnostics", "ITIL Framework"] },
+                { id: "skill2", title: "☁️ M365 & AD", items: ["Exchange Online", "Active Directory", "Group Policy basics"] },
+                { id: "skill3", title: "🔧 Endpoint Mgmt", items: ["SCCM Administration", "BitLocker", "Patch Management"] },
+                { id: "skill4", title: "🌐 Networking (in progress)", items: ["TCP/IP, VLANs", "Cisco basics", "LAN/Wi-Fi troubleshooting"] }
+            ];
+            
+            // Load certs
+            const storedCerts = localStorage.getItem('mzamo_certs_v2');
+            if(storedCerts) certsArray = JSON.parse(storedCerts);
+            else certsArray = [
+                "🎓 BSc IT - Richfield", "📜 Google IT Support Professional", "🔒 IT Security: Defense against Digital Dark Arts",
+                "🌐 Cisco Intro to Cybersecurity", "🔌 Cisco Networking Basics", "⏳ ITIL v4 Foundation (in progress)", "☁️ AZ-900"
+            ];
+            
+            renderAll();
+        }
+        
+        function saveProjects() {
+            localStorage.setItem('mzamo_projects_separated', JSON.stringify(projectsArray));
+        }
+        
+        function saveSkills() {
+            localStorage.setItem('mzamo_skills_v2', JSON.stringify(skillsArray));
+        }
+        
+        function saveCerts() {
+            localStorage.setItem('mzamo_certs_v2', JSON.stringify(certsArray));
+        }
+        
+        function renderProjects() {
+            const professionalGrid = document.getElementById('professionalProjectsGrid');
+            const personalGrid = document.getElementById('personalProjectsGrid');
+            
+            const professional = projectsArray.filter(p => p.type === 'professional');
+            const personal = projectsArray.filter(p => p.type === 'personal');
+            
+            professionalGrid.innerHTML = professional.map(proj => renderProjectCardHTML(proj)).join('');
+            personalGrid.innerHTML = personal.map(proj => renderProjectCardHTML(proj)).join('');
+            
+            if(isAdmin) {
+                document.querySelectorAll('.delete-proj').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = btn.dataset.id;
+                        projectsArray = projectsArray.filter(p => p.id != id);
+                        saveProjects();
+                        renderProjects();
+                    });
+                });
             }
         }
-
-        function saveProjectsToStorage() {
-            localStorage.setItem('mzamo_projects', JSON.stringify(projectsArray));
-        }
-
-        function renderProjectCard(project, saveToStorage = true) {
-            const grid = document.getElementById('projectsGrid');
-            const card = document.createElement('div');
-            card.className = 'project-card';
-            card.setAttribute('data-proj-id', project.id);
-            let imageHtml = project.icon ? `<div class="project-image">${project.icon}</div>` : `<div class="project-image">📁</div>`;
-            if(project.imageData) {
-                imageHtml = `<div class="project-image"><img src="${project.imageData}" style="width:100%; height:100%; object-fit:cover;" alt="project"></div>`;
-            }
-            const tagsHtml = project.techs.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
-            card.innerHTML = `
-                ${imageHtml}
-                <div class="project-content">
-                    <h3>${escapeHtml(project.name)}</h3>
-                    <p>${escapeHtml(project.desc)}</p>
-                    <div style="margin: 12px 0;">${tagsHtml}</div>
-                    <button class="btn-delete" onclick="deleteProjectById('${project.id}')">🗑 Delete Project</button>
+        
+        function renderProjectCardHTML(proj) {
+            const badgeClass = proj.type === 'professional' ? 'badge-professional' : 'badge-personal';
+            const badgeText = proj.type === 'professional' ? '💼 Professional' : '🚀 Personal Project';
+            return `
+                <div class="project-card">
+                    <div class="project-image">${proj.icon ? escapeHtml(proj.icon) : '📁'}</div>
+                    <div class="project-content">
+                        <span class="project-type-badge ${badgeClass}">${badgeText}</span>
+                        <h3>${escapeHtml(proj.name)}</h3>
+                        <p>${escapeHtml(proj.desc)}</p>
+                        <div>${(proj.techs || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+                        ${isAdmin ? `<button class="btn-delete delete-proj" data-id="${proj.id}">🗑 Delete Project</button>` : ''}
+                    </div>
                 </div>
             `;
-            grid.appendChild(card);
-            if(saveToStorage) saveProjectsToStorage();
         }
-
-        window.deleteProjectById = function(id) {
-            if(confirm('Delete this project?')) {
-                const cardToRemove = document.querySelector(`.project-card[data-proj-id="${id}"]`);
-                if(cardToRemove) cardToRemove.remove();
-                projectsArray = projectsArray.filter(p => p.id != id);
-                saveProjectsToStorage();
-            }
-        };
-
-        function escapeHtml(str) { 
-            if(!str) return '';
-            return str.replace(/[&<>]/g, function(m){
-                if(m==='&') return '&amp;'; 
-                if(m==='<') return '&lt;'; 
-                if(m==='>') return '&gt;'; 
-                return m;
+        
+        function renderSkills() {
+            const grid = document.getElementById('skillsGrid');
+            grid.innerHTML = skillsArray.map(skill => `
+                <div class="skill-card" data-id="${skill.id}">
+                    <h3>${escapeHtml(skill.title)}</h3>
+                    <ul>${skill.items.map(i => `<li>${escapeHtml(i)}</li>`).join('')}</ul>
+                    ${isAdmin ? `<button class="btn-delete delete-skill" data-id="${skill.id}" style="margin-top:10px;">🗑 Remove Skill</button>` : ''}
+                </div>
+            `).join('');
+            if(isAdmin) document.querySelectorAll('.delete-skill').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.dataset.id;
+                    skillsArray = skillsArray.filter(s => s.id !== id);
+                    saveSkills();
+                    renderSkills();
+                });
             });
         }
-
-        document.getElementById('projectForm').addEventListener('submit', function(e) {
+        
+        function renderCerts() {
+            const grid = document.getElementById('certsGrid');
+            grid.innerHTML = certsArray.map((cert, idx) => `
+                <div class="cert-badge" data-idx="${idx}">
+                    ${escapeHtml(cert)}
+                    ${isAdmin ? `<button class="btn-delete delete-cert" data-idx="${idx}" style="margin-top:10px; padding:0.2rem 0.8rem;">✖</button>` : ''}
+                </div>
+            `).join('');
+            if(isAdmin) document.querySelectorAll('.delete-cert').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(btn.dataset.idx);
+                    certsArray.splice(idx, 1);
+                    saveCerts();
+                    renderCerts();
+                });
+            });
+        }
+        
+        function renderAll() {
+            renderProjects();
+            renderSkills();
+            renderCerts();
+        }
+        
+        function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+        
+        function setAdminMode(status) {
+            isAdmin = status;
+            const body = document.getElementById('appBody');
+            if(isAdmin) body.classList.add('admin-mode');
+            else body.classList.remove('admin-mode');
+            document.getElementById('projectsAdminPanel').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('skillsAdminPanel').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('certsAdminPanel').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('modeStatus').innerHTML = isAdmin ? '👑 Admin Mode' : '👁️ View Mode';
+            document.getElementById('adminToggleBtn').innerHTML = isAdmin ? '🚪 Logout' : '🔐 Admin Login';
+            document.getElementById('viewOnlyBadge').style.opacity = isAdmin ? '0.3' : '1';
+            renderAll();
+        }
+        
+        function promptAdminLogin() {
+            const user = prompt("Admin Username:");
+            if(user !== "admin") return false;
+            const pass = prompt("Admin Password:");
+            if(pass !== "mzamo2025") return false;
+            return true;
+        }
+        
+        document.getElementById('adminToggleBtn').onclick = () => {
+            if(isAdmin) setAdminMode(false);
+            else if(promptAdminLogin()) setAdminMode(true);
+            else alert("Invalid credentials.");
+        };
+        
+        // Add skill
+        document.getElementById('addSkillBtn')?.addEventListener('click', () => {
+            const title = prompt("Skill card title:");
+            if(!title) return;
+            const items = prompt("List items separated by commas:");
+            if(!items) return;
+            skillsArray.push({ id: Date.now().toString(), title, items: items.split(',').map(i=>i.trim()) });
+            saveSkills();
+            renderSkills();
+        });
+        
+        // Add cert
+        document.getElementById('addCertBtn')?.addEventListener('click', () => {
+            const cert = prompt("New certification:");
+            if(cert) { certsArray.push(cert); saveCerts(); renderCerts(); }
+        });
+        
+        // Add project form
+        document.getElementById('projectForm')?.addEventListener('submit', (e) => {
             e.preventDefault();
+            if(!isAdmin) return alert("Admin only");
             const name = document.getElementById('projName').value.trim();
             const desc = document.getElementById('projDesc').value.trim();
             const techRaw = document.getElementById('projTech').value;
-            const techs = techRaw.split(',').map(t => t.trim()).filter(t=>t);
-            const icon = document.getElementById('projIcon').value.trim() || '⚙️';
-            const imageFile = document.getElementById('projImage').files[0];
-            if(!name || !desc || techs.length===0) { alert("Fill name, description and at least one technology"); return; }
-            const newId = Date.now().toString();
-            const newProject = { id: newId, name, desc, techs, icon, imageData: null };
-            if(imageFile) {
+            const techs = techRaw.split(',').map(t=>t.trim());
+            const icon = document.getElementById('projIcon').value.trim() || '🚀';
+            const type = document.getElementById('projType').value;
+            const file = document.getElementById('projImage').files[0];
+            const newProj = { id: Date.now().toString(), name, desc, techs, icon, type, imageData: null };
+            if(file) {
                 const reader = new FileReader();
-                reader.onload = function(ev) {
-                    newProject.imageData = ev.target.result;
-                    projectsArray.push(newProject);
-                    renderProjectCard(newProject, true);
-                    document.getElementById('projectForm').reset();
-                };
-                reader.readAsDataURL(imageFile);
-            } else {
-                projectsArray.push(newProject);
-                renderProjectCard(newProject, true);
-                document.getElementById('projectForm').reset();
-            }
+                reader.onload = ev => { newProj.imageData = ev.target.result; projectsArray.push(newProj); saveProjects(); renderProjects(); };
+                reader.readAsDataURL(file);
+            } else { projectsArray.push(newProj); saveProjects(); renderProjects(); }
+            document.getElementById('projectForm').reset();
         });
-
-        function seedDefaultProjects() {
-            if(!localStorage.getItem('mzamo_projects')) {
-                const defaultProjects = [
-                    { id: "seed1", name: "Network Infrastructure Simulation", desc: "Configured VLANs, inter-VLAN routing using Cisco Packet Tracer for enterprise scenario.", techs: ["Cisco", "VLAN", "Routing"], icon: "🌐", imageData: null },
-                    { id: "seed2", name: "Active Directory Automation", desc: "PowerShell scripts for bulk user creation & group policy simulation.", techs: ["PowerShell", "Active Directory"], icon: "⚙️", imageData: null }
-                ];
-                projectsArray = defaultProjects;
-                saveProjectsToStorage();
-                defaultProjects.forEach(p => renderProjectCard(p, false));
-            } else {
-                loadProjectsFromStorage();
-            }
+        
+        // Resume download
+        document.getElementById('downloadResumeBtn').onclick = () => {
+            const content = `Mzamo Sithole - IT Professional\nContact: mzamo.mduduzi.comfort@gmail.com\nIT Support Specialist with SCCM, AD, M365, and networking skills.`;
+            const blob = new Blob([content], {type:'application/pdf'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'Mzamo_Sithole_Resume.pdf';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        };
+        
+        // Particles
+        for(let i=0;i<50;i++) {
+            const p = document.createElement('div');
+            p.className = 'particle-3d';
+            p.style.left = Math.random()*100+'%';
+            p.style.animationDelay = Math.random()*15+'s';
+            p.style.animationDuration = 8+Math.random()*12+'s';
+            p.style.width = 2+Math.random()*5+'px';
+            document.getElementById('particleField').appendChild(p);
         }
-
-        function cleanStaticDefaults() {
-            const staticOnes = document.querySelectorAll('.project-card[data-id="default1"], .project-card[data-id="default2"]');
-            staticOnes.forEach(el => el.remove());
-        }
-
-        // Init everything
-        initParticles();
-        seedDefaultProjects();
-        cleanStaticDefaults();
-
-        // Intersection observer for fade-in
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if(entry.isIntersecting) entry.target.style.opacity = '1'; });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('section').forEach(s => { s.style.opacity = '0'; s.style.transition = 'opacity 0.8s ease'; observer.observe(s); });
-        setTimeout(() => { document.querySelectorAll('section').forEach(s => s.style.opacity = '1'); }, 200);
+        
+        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+        }));
+        
+        loadAllData();
+        setAdminMode(false);
     </script>
 </body>
 </html>

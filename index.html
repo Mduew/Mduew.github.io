@@ -2,910 +2,836 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Mzamo Sithole • IT Professional | Dual Project Sections</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mzamo Sithole • IT Professional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0f;
+            --surface2: #111118;
+            --border: rgba(255,255,255,0.08);
+            --border2: rgba(255,255,255,0.15);
+            --text: #ffffff;
+            --text2: #888899;
+            --text3: #555566;
+            --accent: #4f8ef7;
+            --accent2: #7c6af7;
+            --accent3: #f7c86a;
+            --green: #3dd68c;
+            --radius: 16px;
+            --radius2: 24px;
+            --max-w: 1100px;
         }
-
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: #000000;
-            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            perspective: 1200px;
         }
-
-        .bg-3d-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            transform-style: preserve-3d;
-            opacity: 0.4;
+        /* Subtle animated grid background */
+        .bg-grid {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
-
-        .grid-layer {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                linear-gradient(0deg, rgba(255,255,255,0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: driftGrid 50s linear infinite;
-            transform: rotateX(45deg) rotateZ(10deg) translateZ(-200px);
+        /* Ambient glow orbs */
+        .glow {
+            position: fixed; border-radius: 50%; filter: blur(80px);
+            pointer-events: none; z-index: 0;
+            animation: drift 20s ease-in-out infinite alternate;
         }
+        .glow-1 { width: 500px; height: 500px; background: rgba(79,142,247,0.07); top: -100px; right: -100px; }
+        .glow-2 { width: 400px; height: 400px; background: rgba(124,106,247,0.06); bottom: 20%; left: -100px; animation-delay: -7s; }
+        @keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,-30px) scale(1.1); } }
 
-        @keyframes driftGrid {
-            0% { transform: rotateX(45deg) rotateZ(10deg) translateZ(-200px) translateX(0) translateY(0); }
-            100% { transform: rotateX(45deg) rotateZ(10deg) translateZ(-200px) translateX(200px) translateY(100px); }
-        }
-
-        .particle-3d {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, #ffffff, rgba(255,255,255,0.4));
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            filter: blur(1px);
-            animation: floatParticle 12s infinite ease-in-out;
-        }
-
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) translateX(0) translateZ(0) scale(0.2); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.6; }
-            100% { transform: translateY(-20vh) translateX(80px) translateZ(150px) scale(1); opacity: 0; }
-        }
-
-        header {
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
+        /* Navigation */
         nav {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            padding: 0 2rem; height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
         }
-
-        .logo {
-            font-size: 1.9rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .nav-logo {
+            font-size: 1.15rem; font-weight: 700; letter-spacing: -0.5px;
+            display: flex; align-items: center; gap: 0.5rem;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-
+        .nav-logo .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; }
+        .nav-links { display: flex; gap: 0.25rem; list-style: none; }
         .nav-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: white;
-            text-shadow: 0 0 6px white;
-        }
-
-        .mode-control {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(0,0,0,0.5);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            backdrop-filter: blur(8px);
-        }
-
-        .mode-badge {
-            font-size: 0.8rem;
-            padding: 0.3rem 0.8rem;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.15);
-        }
-
-        .admin-login-btn, .admin-logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.5);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.2s;
-        }
-
-        .admin-login-btn:hover, .admin-logout-btn:hover {
-            background: white;
-            color: black;
-        }
-
-        .hero {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 6rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            z-index: 5;
-            animation: heroFloat 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-
-        @keyframes heroFloat {
-            from { opacity: 0; transform: translateY(60px) rotateX(15deg); }
-            to { opacity: 1; transform: translateY(0) rotateX(0); }
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            background: linear-gradient(to right, #ffffff, #c0c0c0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .tagline {
-            font-size: 1.7rem;
-            font-weight: 300;
-            color: #ccc;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero p {
-            max-width: 750px;
-            margin: 0 auto 2rem;
-            color: #b0b0b0;
-        }
-
-        .btn {
-            padding: 0.9rem 2rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-            text-decoration: none;
-            font-size: 1rem;
-            border-radius: 40px;
-        }
-
-        .btn-primary {
-            background: #ffffff;
-            color: #000;
-            box-shadow: 0 5px 20px rgba(255,255,255,0.3);
-        }
-        .btn-primary:hover { transform: translateY(-5px); }
-        .btn-secondary {
-            border: 2px solid #fff;
-            color: #fff;
-            background: rgba(0,0,0,0.4);
-        }
-
-        section {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 5rem 2rem;
-            position: relative;
-            z-index: 5;
-        }
-
-        h2 {
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #aaa;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .glass-card {
-            background: rgba(20, 20, 30, 0.5);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 24px;
-        }
-
-        .about-content, .experience-card {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(12px);
-            padding: 2.5rem;
-            border-radius: 32px;
-            max-width: 950px;
-            margin: 0 auto;
-            border: 1px solid rgba(255,255,255,0.2);
-            position: relative;
-        }
-
-        .experience-card {
-            border-left: 5px solid white;
-        }
-
-        .editable-text {
+            color: var(--text2); text-decoration: none;
+            font-size: 0.875rem; font-weight: 500;
+            padding: 0.4rem 0.9rem; border-radius: 30px;
             transition: all 0.2s;
         }
-        
-        .admin-mode .editable-text:hover {
-            background: rgba(0,255,200,0.1);
-            cursor: text;
-            outline: 1px dashed #00ffcc;
-            border-radius: 8px;
+        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+        .nav-cta {
+            background: var(--text); color: var(--bg);
+            padding: 0.5rem 1.2rem; border-radius: 30px;
+            font-size: 0.875rem; font-weight: 600;
+            text-decoration: none; transition: all 0.2s;
         }
-        
-        .edit-icon {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            background: #00ffcc;
-            color: #000;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            cursor: pointer;
-            opacity: 0;
-            transition: 0.2s;
-            z-index: 10;
-        }
-        
-        .admin-mode .edit-icon {
-            opacity: 0.7;
-        }
-        
-        .edit-icon:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,255,255,0.2); }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+        /* Hero */
+        .hero {
+            position: relative; z-index: 10;
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 8rem 2rem 4rem;
         }
-
-        .skill-card {
-            background: rgba(20,20,30,0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 28px;
-            padding: 1.8rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
-            position: relative;
+        .hero-inner {
+            max-width: var(--max-w); margin: 0 auto; width: 100%;
         }
-        .skill-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.5); }
-
-        .admin-panel {
-            background: rgba(10,10,20,0.8);
-            backdrop-filter: blur(16px);
-            border-radius: 32px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 2px solid #00ffcc;
-            box-shadow: 0 0 20px rgba(0,255,200,0.2);
-        }
-        .admin-panel h3 { color: #00ffcc; margin-bottom: 1rem; }
-        .admin-panel h4 { color: #ffaa44; margin: 1rem 0 0.5rem; }
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: #ddd; }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 0.9rem;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            color: white;
-        }
-        .btn-add {
-            background: #00ffcc;
-            color: black;
-            border-radius: 40px;
-            padding: 0.8rem 2rem;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-        }
-
-        .projects-section {
-            margin-bottom: 4rem;
-        }
-        
-        .projects-section h3 {
-            font-size: 2rem;
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.3);
+            padding: 0.4rem 1rem; border-radius: 30px;
+            font-size: 0.8rem; color: var(--accent); font-weight: 500;
             margin-bottom: 1.5rem;
-            text-align: center;
-            background: linear-gradient(135deg, #ffaa44, #ff8844);
-            -webkit-background-clip: text;
+        }
+        .hero-badge .status-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900; letter-spacing: -3px; line-height: 1.0;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 .name-highlight {
+            background: linear-gradient(135deg, #ffffff 30%, #9999bb);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
-            color: transparent;
         }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
+        .hero h1 .name-accent {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .project-card {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
-            overflow: hidden;
-            transition: 0.4s;
-            border: 1px solid rgba(255,255,255,0.15);
+        .hero-sub {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--text2); font-weight: 300;
+            margin-bottom: 1rem; line-height: 1.4;
         }
-        .project-card:hover { transform: translateY(-10px); border-color: #fff; }
-        .project-image {
-            height: 180px;
-            background: linear-gradient(145deg, #222, #111);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            overflow: hidden;
+        .hero-desc {
+            max-width: 580px; color: var(--text2);
+            font-size: 1rem; margin-bottom: 2.5rem; line-height: 1.7;
         }
-        .project-image img { width: 100%; height: 100%; object-fit: cover; }
-        .project-content { padding: 1.5rem; }
-        .tag {
-            background: rgba(255,255,255,0.15);
-            padding: 0.3rem 0.9rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            display: inline-block;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-main {
+            background: var(--text); color: var(--bg);
+            padding: 0.9rem 2rem; border-radius: 40px;
+            font-weight: 600; font-size: 0.95rem;
+            text-decoration: none; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            transition: all 0.25s;
         }
-        .btn-delete {
-            background: rgba(200,60,60,0.8);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 40px;
-            margin-top: 1rem;
-            cursor: pointer;
-            color: white;
-            font-weight: bold;
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,255,255,0.2); }
+        .btn-ghost {
+            border: 1.5px solid var(--border2); color: var(--text);
+            padding: 0.9rem 2rem; border-radius: 40px;
+            font-weight: 500; font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            transition: all 0.25s;
+            background: transparent;
         }
-        .project-type-badge {
-            display: inline-block;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            margin-bottom: 0.8rem;
-        }
-        .badge-professional { background: #3a6ea5; color: white; }
-        .badge-personal { background: #6a4e9b; color: white; }
-
-        .cert-badge {
-            background: rgba(20,20,30,0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 28px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);
-            position: relative;
-        }
-
-        .contact {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(20px);
-            border-radius: 48px;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-        .contact-info {
-            display: flex;
+        .btn-ghost:hover { border-color: var(--text); background: rgba(255,255,255,0.04); }
+        .hero-stats {
+            display: flex; gap: 3rem; margin-top: 4rem;
+            padding-top: 2.5rem; border-top: 1px solid var(--border);
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
         }
-
-        .resume-download-card {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 3rem 2rem;
-            text-align: center;
-            max-width: 650px;
-            margin: 0 auto;
-            border: 1px solid rgba(255,255,255,0.3);
+        .stat { }
+        .stat-number {
+            font-size: 2rem; font-weight: 800; letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--text), var(--text2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .btn-download {
-            background: linear-gradient(135deg, #ffffff, #e0e0e0);
-            color: #000;
-            padding: 1rem 2.5rem;
-            font-weight: 700;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
+        .stat-label { font-size: 0.8rem; color: var(--text3); margin-top: 0.2rem; }
+        .scroll-hint {
+            position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            color: var(--text3); font-size: 0.75rem;
+            animation: bounce 2s ease-in-out infinite;
         }
-
-        .view-only-badge {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.7);
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            color: #aaa;
-            z-index: 99;
+        @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+        /* Sections */
+        section { position: relative; z-index: 10; padding: 6rem 2rem; }
+        .section-inner { max-width: var(--max-w); margin: 0 auto; }
+        .section-label {
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 0.75rem;
         }
-
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800; letter-spacing: -1.5px;
+            margin-bottom: 3rem; line-height: 1.1;
+        }
+        /* Story section */
+        .story {
+            position: relative; z-index: 10;
+            padding: 5rem 2rem;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(79,142,247,0.03) 0%, transparent 100%);
+        }
+        .story-inner {
+            max-width: 780px; margin: 0 auto;
+        }
+        .story-quote {
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            font-weight: 400; line-height: 1.8;
+            color: var(--text2);
+            border-left: 3px solid var(--accent);
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        .story-text {
+            font-size: 1rem; line-height: 2;
+            color: var(--text2);
+            margin-bottom: 1.5rem;
+        }
+        .story-text:last-child { margin-bottom: 0; }
+        .story-signature {
+            margin-top: 2.5rem;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .story-signature .line {
+            height: 1px; width: 40px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+        .story-signature .name {
+            font-size: 0.9rem; font-weight: 600; color: var(--text);
+        }
+        .story-signature .tagline {
+            font-size: 0.8rem; color: var(--text3);
+        }
+        /* About */
+        .about-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+            align-items: start;
+        }
+        .about-text p {
+            color: var(--text2); font-size: 1.05rem; line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .about-text p:last-child { margin-bottom: 0; }
+        .highlight-box {
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: var(--radius2);
+            padding: 2rem;
+        }
+        .highlight-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+        .highlight-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+        .highlight-list li {
+            display: flex; align-items: flex-start; gap: 0.7rem;
+            font-size: 0.9rem; color: var(--text2);
+        }
+        .highlight-list li .check {
+            width: 18px; height: 18px; min-width: 18px;
+            background: rgba(61,214,140,0.15); border: 1px solid rgba(61,214,140,0.3);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.6rem; color: var(--green); margin-top: 2px;
+        }
+        /* Experience */
+        .exp-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius2);
+            padding: 2.5rem;
+            border-left: 4px solid var(--accent);
+            transition: border-color 0.3s;
+        }
+        .exp-card:hover { border-left-color: var(--accent2); }
+        .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .exp-role { font-size: 1.3rem; font-weight: 700; }
+        .exp-company { color: var(--text3); font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .exp-period { font-size: 0.8rem; color: var(--accent); background: rgba(79,142,247,0.1); padding: 0.2rem 0.7rem; border-radius: 20px; font-weight: 500; }
+        .exp-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1.5rem; }
+        .exp-highlight {
+            display: flex; align-items: flex-start; gap: 0.6rem;
+            font-size: 0.88rem; color: var(--text2); line-height: 1.5;
+        }
+        .exp-highlight .arrow { color: var(--accent); font-size: 0.7rem; margin-top: 4px; }
+        .exp-highlight .metric { color: var(--text); font-weight: 600; }
+        /* Skills */
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem;
+        }
+        .skill-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        .skill-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+        .skill-card .skill-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+        .skill-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .skill-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+        .skill-card li { font-size: 0.8rem; color: var(--text2); padding-left: 1rem; position: relative; }
+        .skill-card li::before { content: '·'; position: absolute; left: 0; color: var(--accent); }
+        /* Projects */
+        .projects-tabs { display: flex; gap: 0.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 0.5rem 1.3rem; border-radius: 30px;
+            background: var(--surface2); border: 1px solid var(--border);
+            color: var(--text2); font-size: 0.85rem; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--text); color: var(--bg); border-color: var(--text);
+        }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .project-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.35s;
+        }
+        .project-card:hover { border-color: var(--border2); transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .project-image {
+            height: 140px; background: linear-gradient(135deg, #111118, #1a1a25);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .project-body { padding: 1.5rem; }
+        .project-badge {
+            display: inline-block;
+            padding: 0.2rem 0.7rem; border-radius: 20px;
+            font-size: 0.7rem; font-weight: 600;
+            margin-bottom: 0.7rem;
+        }
+        .badge-pro { background: rgba(79,142,247,0.15); color: var(--accent); border: 1px solid rgba(79,142,247,0.3); }
+        .badge-personal { background: rgba(124,106,247,0.15); color: var(--accent2); border: 1px solid rgba(124,106,247,0.3); }
+        .project-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+        .project-body p { font-size: 0.82rem; color: var(--text2); margin-bottom: 1rem; line-height: 1.5; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tech-tag {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.6rem; border-radius: 20px;
+            font-size: 0.7rem; color: var(--text2);
+        }
+        /* Certs */
+        .certs-scroll {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;
+        }
+        .cert-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.3rem;
+            display: flex; align-items: center; gap: 0.8rem;
+            transition: all 0.3s;
+        }
+        .cert-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+        .cert-icon { font-size: 1.6rem; flex-shrink: 0; }
+        .cert-info { font-size: 0.82rem; font-weight: 600; line-height: 1.3; }
+        .cert-info .pending { color: var(--accent3); }
+        /* Contact */
+        .contact-section {
+            background: var(--surface2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .contact-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+            align-items: center;
+        }
+        .contact-cta { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -1px; line-height: 1.2; margin-bottom: 1rem; }
+        .contact-sub { color: var(--text2); margin-bottom: 2rem; }
+        .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+        .contact-link {
+            display: flex; align-items: center; gap: 0.8rem;
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1rem 1.3rem;
+            text-decoration: none; color: var(--text);
+            font-size: 0.9rem; font-weight: 500;
+            transition: all 0.2s;
+        }
+        .contact-link:hover { border-color: var(--border2); transform: translateX(4px); }
+        .contact-link .link-icon { font-size: 1.3rem; }
+        .contact-link .link-arrow { margin-left: auto; color: var(--text3); font-size: 0.8rem; }
+        .contact-visual {
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .contact-card {
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 1.5rem;
+        }
+        .contact-card h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text3); margin-bottom: 1rem; }
+        .contact-card .info-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; margin-bottom: 0.7rem; }
+        .contact-card .info-row:last-child { margin-bottom: 0; }
+        .contact-card .info-row .info-icon { }
+        .contact-card .avail-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(61,214,140,0.1); border: 1px solid rgba(61,214,140,0.3);
+            padding: 0.3rem 0.8rem; border-radius: 20px;
+            font-size: 0.75rem; color: var(--green); font-weight: 600;
+        }
+        /* Footer */
         footer {
-            text-align: center;
+            position: relative; z-index: 10;
             padding: 3rem 2rem;
-            color: #777;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid var(--border);
+            text-align: center;
         }
-
-        @media (max-width: 800px) {
-            .hero h1 { font-size: 2.5rem; }
-            .tagline { font-size: 1.2rem; }
-            h2 { font-size: 2rem; }
-            nav { flex-direction: column; }
+        .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+        .footer-logo { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .footer-tagline { font-size: 0.8rem; color: var(--text3); margin-bottom: 1.5rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .footer-links a { color: var(--text2); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--text); }
+        .footer-copy { font-size: 0.75rem; color: var(--text3); }
+        /* Mobile */
+        @media (max-width: 768px) {
+            .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .exp-highlights { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .hero-stats { gap: 2rem; }
         }
-        
-        .inline-edit-input {
-            width: 100%;
-            background: #1a1a2e;
-            border: 2px solid #00ffcc;
-            color: white;
-            padding: 8px;
-            border-radius: 12px;
-            font-size: inherit;
-            font-family: inherit;
+        /* Resume section */
+        .resume-section {
+            position: relative; z-index: 10;
+            padding: 5rem 2rem;
+            background: var(--surface2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
-        
-        .save-btn {
-            background: #00ffcc;
-            color: black;
-            border: none;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-left: 8px;
-            cursor: pointer;
-            font-size: 0.7rem;
+        .resume-inner {
+            max-width: var(--max-w); margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 2rem; flex-wrap: wrap;
         }
-        
-        .type-selector {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+        .resume-left { display: flex; align-items: center; gap: 1.5rem; }
+        .resume-icon-wrap {
+            width: 64px; height: 64px; min-width: 64px;
+            background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.3);
+            border-radius: 16px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
         }
-        .type-option {
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            background: rgba(255,255,255,0.1);
+        .resume-info h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .resume-info p { font-size: 0.9rem; color: var(--text2); }
+        .resume-info .updated { font-size: 0.75rem; color: var(--text3); margin-top: 0.2rem; }
+        .resume-download-btn {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            background: var(--text); color: var(--bg);
+            padding: 0.9rem 1.8rem; border-radius: 40px;
+            font-weight: 600; font-size: 0.95rem;
+            text-decoration: none; border: none; cursor: pointer;
+            transition: all 0.25s; white-space: nowrap;
         }
-        .type-option.active {
-            background: #00ffcc;
-            color: black;
+        .resume-download-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255,255,255,0.2); }
+        .no-resume-note {
+            font-size: 0.8rem; color: var(--text3);
+            margin-top: 0.5rem;
         }
     </style>
 </head>
-<body id="appBody">
-    <div class="bg-3d-grid"><div class="grid-layer"></div></div>
-    <div id="particleField"></div>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
 
-    <header>
-        <nav>
-            <div class="logo">✦ Mzamo Sithole</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#certifications">Certs</a></li>
-                <li><a href="#resume">Resume</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="mode-control" id="modeControl">
-                <span class="mode-badge" id="modeStatus">👁️ View Mode</span>
-                <button id="adminToggleBtn" class="admin-login-btn">🔐 Admin Login</button>
-            </div>
-        </nav>
-    </header>
+    <nav>
+        <div class="nav-logo"><span class="dot"></span>Mzamo Sithole</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+        </ul>
+        <a href="mailto:mzamo.mduduzi.comfort@gmail.com" class="nav-cta">Get in Touch</a>
+    </nav>
 
     <div class="hero">
-        <h1 id="heroName">Mzamo Mduduzi Comfort Sithole</h1>
-        <p class="tagline" id="heroTagline">IT Support Specialist → Network Engineer (In Progress)</p>
-        <p id="heroDesc">Hands-on ITIL-aligned support | SCCM | Active Directory | Microsoft 365 | Currently advancing into Cisco networking.</p>
-        <div class="cta-buttons">
-            <a href="#contact" class="btn btn-primary">Connect</a>
-            <a href="mailto:mzamo.mduduzi.comfort@gmail.com" class="btn btn-secondary">Email Me</a>
+        <div class="hero-inner">
+            <div class="hero-badge">
+                <span class="status-dot"></span>
+                Available for new opportunities
+            </div>
+            <h1>
+                <span class="name-highlight">Mzamo Mduduzi</span><br>
+                <span class="name-accent">Comfort Sithole</span>
+            </h1>
+            <p class="hero-sub">IT Support Specialist → Network Engineer</p>
+            <p class="hero-desc">
+                BSc IT graduate with hands-on experience supporting 200+ users across enterprise IT infrastructure. 
+                Skilled in SCCM, Active Directory, Microsoft 365, and endpoint security. Currently advancing into networking with Cisco CCNA track.
+            </p>
+            <div class="hero-actions">
+                <a href="mailto:mzamo.mduduzi.comfort@gmail.com" class="btn-main">📬 Send a Message</a>
+                <a href="resume.pdf" class="btn-ghost" target="_blank" rel="noopener">📄 Download Resume</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Users Supported</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">1+</div>
+                    <div class="stat-label">Year Corporate IT</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Certifications</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">CCNA</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+            </div>
         </div>
+        <div class="scroll-hint">▼ scroll</div>
     </div>
 
+    <section id="story">
+        <div class="story-inner">
+            <blockquote class="story-quote">
+                "I remember early last year, right after my internship ended. I was sending out CVs almost every day. Reaching out to IT companies, even asking to volunteer just to get hands-on exposure on the networking side. Rejection after rejection. Some didn't even respond. At some point, you start questioning everything. But I told myself something simple: keep pushing. What's meant for me will find me along the way. That's when I stopped waiting and started building."
+            </blockquote>
+            <p class="story-text">
+                I set up my own home lab. Broke things, fixed them, learned how networks actually behave — not just in theory. No permission needed, no gatekeepers. It didn't remove the frustration, but it gave me control.
+            </p>
+            <p class="story-text" style="font-weight: 600; color: var(--text);">
+                So if you're in that space where doors aren't opening — build your own. Learn anyway. Show up anyway.
+            </p>
+            <div class="story-signature">
+                <div class="line"></div>
+                <div>
+                    <div class="name">Mzamo Sithole</div>
+                    <div class="tagline">Still pushing. Still learning.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="about">
-        <h2 id="aboutTitle">Professional Summary</h2>
-        <div class="about-content glass-card" style="position: relative;">
-            <p id="aboutText">IT graduate with 1+ year of corporate desktop & helpdesk support (Sappi Southern Africa). Skilled in Windows troubleshooting, Microsoft 365 administration, Active Directory, BitLocker, SCCM deployments, and incident management (ITIL). Strong foundation in endpoint management. Currently preparing for Cisco certifications (CCNA track).</p>
-            <span class="edit-icon" data-target="aboutText">✏️ Edit</span>
+        <div class="section-inner">
+            <div class="about-grid">
+                <div class="about-text">
+                    <div class="section-label">About Me</div>
+                    <div class="section-title">Built to support. Trained to scale.</div>
+                    <p>
+                        From helpdesk to enterprise IT at Sappi Southern Africa — I've spent over a year solving real problems for real people. Hardware failures, ticket overloads, M365 migrations, AD group policies — if it breaks or needs configuring, I've touched it.
+                    </p>
+                    <p>
+                        The goal isn't just fixing things though. It's understanding systems end-to-end so you can prevent them breaking in the first place. That's why I'm moving into networking — to build the kind of infrastructure that doesn't need constant firefighting.
+                    </p>
+                    <p>
+                        Based in Durban, South Africa. Fluent in English and isiZulu. Code 10 (C1) driver's license.
+                    </p>
+                </div>
+                <div class="highlight-box">
+                    <h3>Core Strengths</h3>
+                    <ul class="highlight-list">
+                        <li><span class="check">✓</span>ITIL-aligned incident & request management with SLA accountability</li>
+                        <li><span class="check">✓</span>Enterprise endpoint management via SCCM (200+ devices)</li>
+                        <li><span class="check">✓</span>Active Directory administration, BitLocker encryption, Group Policy</li>
+                        <li><span class="check">✓</span>Microsoft 365 administration across Exchange, Teams, OneDrive</li>
+                        <li><span class="check">✓</span>Network fundamentals — TCP/IP, VLANs, LAN/Wi-Fi troubleshooting</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="experience">
-        <h2 id="expTitle">Work Experience</h2>
-        <div class="experience-card glass-card" style="position: relative;">
-            <h3 id="expRole" style="font-size: 1.8rem;">IT Operations Intern</h3>
-            <div id="expCompany" style="color:#bbb;">Sappi Southern Africa, Durban | Feb 2024 – Jan 2025</div>
-            <ul id="expList" style="margin-top: 1.2rem; list-style: none;">
-                <li>✓ Level 1-2 IT support across hardware, software, and network connectivity.</li>
-                <li>✓ Managed incidents & requests via ITIL ticketing system (SLA adherence).</li>
-                <li>✓ SCCM administrative tasks: software deployment, updates, device collections.</li>
-                <li>✓ BitLocker encryption management & recovery for endpoint security.</li>
-                <li>✓ Active Directory user administration: accounts, groups, permissions.</li>
-                <li>✓ Supported M365 (Outlook, Teams, OneDrive) for 200+ users.</li>
-            </ul>
-            <span class="edit-icon" data-target="expRole,expCompany,expList">✏️ Edit Experience</span>
+        <div class="section-inner">
+            <div class="section-label">Experience</div>
+            <div class="section-title">Where I've Worked</div>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                <!-- Freelance IT Support -->
+                <div class="exp-card" style="border-left-color: var(--green);">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Freelance IT Support Technician</div>
+                            <div class="exp-company">Self-Employed</div>
+                        </div>
+                        <span class="exp-period" style="background: rgba(61,214,140,0.1); border: 1px solid rgba(61,214,140,0.3); color: var(--green);">Jan 2021 – Jan 2024</span>
+                    </div>
+                    <div class="exp-highlights">
+                        <div class="exp-highlight"><span class="arrow">→</span> Provided desktop support to <span class="metric">individual clients & small businesses</span> in Durban</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">Windows OS & Office</span> installation, configuration & troubleshooting</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">Hardware repair</span> — laptops, desktops, printers & peripherals</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">Virus & malware removal</span> with system performance optimisation</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> Windows updates, system activation & general <span class="metric">PC maintenance</span></div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">Remote & on-site support</span> with professional client communication</div>
+                    </div>
+                </div>
+
+                <!-- Sappi -->
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">IT Support Specialist</div>
+                            <div class="exp-company">Sappi Southern Africa, Durban | Feb 2024 – Jan 2025</div>
+                        </div>
+                        <span class="exp-period">Feb 2024 – Jan 2025</span>
+                    </div>
+                    <div class="exp-highlights">
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">200+ users</span> supported across M365, hardware & network issues</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">SLA adherence</span> maintained across all L1/L2 tickets</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">SCCM automation</span> reduced manual software deployment effort</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">BitLocker</span> encryption & recovery managing 200+ endpoints</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">PowerShell</span> scripts for bulk AD user onboarding</div>
+                        <div class="exp-highlight"><span class="arrow">→</span> <span class="metric">ITIL ticketing</span> system administration & process improvement</div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
     <section id="skills">
-        <h2 id="skillsTitle">Technical Arsenal</h2>
-        <div class="skills-grid" id="skillsGrid"></div>
-        <div id="skillsAdminPanel" style="display: none; margin-top: 2rem;" class="admin-panel">
-            <h4>🛠️ Manage Skills Cards</h4>
-            <div id="skillsManager"></div>
-            <button id="addSkillBtn" class="btn-add">+ Add New Skill Card</button>
+        <div class="section-inner">
+            <div class="section-label">Skills</div>
+            <div class="section-title">What I Bring to the Table</div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🖥️</div>
+                    <h3>Desktop & Helpdesk</h3>
+                    <ul>
+                        <li>Windows 10/11 troubleshooting</li>
+                        <li>Hardware diagnostics & repair</li>
+                        <li>ITIL incident management</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">☁️</div>
+                    <h3>Microsoft 365</h3>
+                    <ul>
+                        <li>Exchange Online administration</li>
+                        <li>Teams & OneDrive management</li>
+                        <li>SharePoint & licensing</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔧</div>
+                    <h3>Endpoint Management</h3>
+                    <ul>
+                        <li>SCCM / Configuration Manager</li>
+                        <li>BitLocker encryption & recovery</li>
+                        <li>Patch management & compliance</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">👥</div>
+                    <h3>Active Directory</h3>
+                    <ul>
+                        <li>User & group administration</li>
+                        <li>Group Policy Objects (GPOs)</li>
+                        <li>PowerShell automation scripts</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3>Networking (Growing)</h3>
+                    <ul>
+                        <li>TCP/IP, DNS, DHCP fundamentals</li>
+                        <li>VLANs & inter-VLAN routing</li>
+                        <li>Cisco Packet Tracer (CCNA prep)</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔒</div>
+                    <h3>Security Fundamentals</h3>
+                    <ul>
+                        <li>Endpoint hardening</li>
+                        <li>Authentication & MFA</li>
+                        <li>Data loss prevention basics</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- PROJECTS SECTION WITH SEPARATE PERSONAL & PROFESSIONAL -->
     <section id="projects">
-        <h2>Projects Portfolio</h2>
-        <p class="section-subtitle">Professional work experience projects + Personal learning experiments</p>
-        
-        <div id="projectsAdminPanel" style="display: none;" class="admin-panel">
-            <h3>✨ Admin Console — Add New Project</h3>
-            <form id="projectForm">
-                <div class="form-group"><label>Project Name</label><input type="text" id="projName" required></div>
-                <div class="form-group"><label>Description</label><textarea id="projDesc" rows="2"></textarea></div>
-                <div class="form-group"><label>Technologies (comma separated)</label><input type="text" id="projTech" required></div>
-                <div class="form-group"><label>Icon (emoji)</label><input type="text" id="projIcon" placeholder="🛜"></div>
-                <div class="form-group"><label>Project Type</label>
-                    <select id="projType">
-                        <option value="professional">💼 Professional Project (Work-related)</option>
-                        <option value="personal">🚀 Personal Project (Learning/Experiment)</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Project Image</label><input type="file" id="projImage" accept="image/*"></div>
-                <button type="submit" class="btn-add">➕ Deploy Project</button>
-            </form>
-        </div>
-        
-        <!-- Professional Projects Section -->
-        <div class="projects-section">
-            <h3>💼 Professional Projects</h3>
-            <div class="projects-grid" id="professionalProjectsGrid"></div>
-        </div>
-        
-        <!-- Personal Projects Section -->
-        <div class="projects-section">
-            <h3>🚀 Personal Projects & Labs</h3>
-            <div class="projects-grid" id="personalProjectsGrid"></div>
+        <div class="section-inner">
+            <div class="section-label">Projects</div>
+            <div class="section-title">Work I've Done</div>
+            <div class="projects-tabs">
+                <button class="tab-btn active" data-tab="all" onclick="filterProjects('all')">All</button>
+                <button class="tab-btn" data-tab="professional" onclick="filterProjects('professional')">💼 Professional</button>
+                <button class="tab-btn" data-tab="personal" onclick="filterProjects('personal')">🚀 Personal</button>
+            </div>
+            <div class="projects-grid" id="projectsGrid"></div>
         </div>
     </section>
 
     <section id="certifications">
-        <h2 id="certsTitle">Certifications & Learning</h2>
-        <div class="skills-grid" id="certsGrid" style="grid-template-columns: repeat(auto-fit, minmax(240px,1fr));"></div>
-        <div id="certsAdminPanel" style="display: none; margin-top: 2rem;" class="admin-panel">
-            <h4>📜 Manage Certifications</h4>
-            <div id="certsManager"></div>
-            <button id="addCertBtn" class="btn-add">+ Add Certification</button>
+        <div class="section-inner">
+            <div class="section-label">Certifications</div>
+            <div class="section-title">What I've Earned</div>
+            <div class="certs-scroll" id="certsGrid"></div>
         </div>
     </section>
 
-    <section id="resume">
-        <h2>Resume / CV</h2>
-        <div class="resume-download-card">
-            <div class="resume-icon">📄</div>
-            <h3>Mzamo Sithole - Resume</h3>
-            <div class="resume-info">
-                <p>📄 Format: PDF Document | 📅 Updated: March 2025</p>
+    <section id="contact" class="contact-section">
+        <div class="section-inner">
+            <div class="contact-grid">
+                <div>
+                    <div class="section-label">Contact</div>
+                    <div class="contact-cta">Let's build something together.</div>
+                    <p class="contact-sub">Open to IT support roles, junior network engineer positions, and IT collaborations. I respond within 24 hours.</p>
+                    <div class="contact-links">
+                        <a href="mailto:mzamo.mduduzi.comfort@gmail.com" class="contact-link">
+                            <span class="link-icon">📧</span>
+                            mzamo.mduduzi.comfort@gmail.com
+                            <span class="link-arrow">→</span>
+                        </a>
+                        <a href="tel:+27736301020" class="contact-link">
+                            <span class="link-icon">📞</span>
+                            073 630 1020
+                            <span class="link-arrow">→</span>
+                        </a>
+                        <a href="#" class="contact-link">
+                            <span class="link-icon">📍</span>
+                            Durban, South Africa
+                            <span class="link-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-visual">
+                    <div class="contact-card">
+                        <h4>Quick Info</h4>
+                        <div class="info-row">📋 BSc IT — Richfield</div>
+                        <div class="info-row">📅 1+ year corporate experience</div>
+                        <div class="info-row">🗣️ English & isiZulu</div>
+                        <div class="info-row">🚗 Code 10 (C1) driver</div>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Current Status</h4>
+                        <div class="avail-badge"><span>●</span> Actively job searching</div>
+                    </div>
+                </div>
             </div>
-            <button id="downloadResumeBtn" class="btn-download">⬇️ Download Resume (PDF)</button>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="contact">
-            <h2>Let's Connect</h2>
-            <p id="contactSub">Open for IT support, junior network engineer roles & collaborations</p>
-            <div class="contact-info" id="contactInfo">
-                <div><strong>📧</strong> mzamo.mduduzi.comfort@gmail.com</div>
-                <div><strong>📞</strong> 073 630 1020</div>
-                <div><strong>📍</strong> Durban, South Africa</div>
-            </div>
-            <a href="mailto:mzamo.mduduzi.comfort@gmail.com" class="btn btn-primary">Send Message</a>
-            <span class="edit-icon" data-target="contactSub,contactInfo" style="position: relative; display: inline-block; margin-left: 1rem;">✏️ Edit Contact</span>
         </div>
     </section>
 
     <footer>
-        <p id="footerText">© 2026 Mzamo Mduduzi Comfort Sithole | Code 10 (C1) | English & isiZulu | Aspiring Network Engineer</p>
+        <div class="footer-inner">
+            <div class="footer-logo">✦ Mzamo Sithole</div>
+            <div class="footer-tagline">IT Support Specialist → Network Engineer (In Progress)</div>
+            <div class="footer-links">
+                <a href="mailto:mzamo.mduduzi.comfort@gmail.com">Email</a>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+            </div>
+            <div class="footer-copy">© 2025 Mzamo Mduduzi Comfort Sithole. Built with purpose.</div>
+        </div>
     </footer>
-    <div class="view-only-badge" id="viewOnlyBadge">🔒 View-Only Mode • Resume Download Only</div>
 
     <script>
-        let isAdmin = false;
-        
-        // Projects with type: 'professional' or 'personal'
-        let projectsArray = [];
-        let skillsArray = [];
-        let certsArray = [];
-        
-        function loadAllData() {
-            // Load projects
-            const storedProjects = localStorage.getItem('mzamo_projects_separated');
-            if(storedProjects) projectsArray = JSON.parse(storedProjects);
-            else {
-                projectsArray = [
-                    { id: "prof1", name: "SCCM Software Deployment Optimization", desc: "Optimized application deployment for 200+ endpoints, reducing manual effort by 30%.", techs: ["SCCM", "PowerShell", "Windows"], icon: "📦", type: "professional", imageData: null },
-                    { id: "prof2", name: "Active Directory User Management Automation", desc: "Implemented PowerShell scripts for bulk user creation, group assignments, and automated onboarding.", techs: ["PowerShell", "Active Directory"], icon: "👥", type: "professional", imageData: null },
-                    { id: "personal1", name: "Cisco Packet Tracer Homelab", desc: "Built a virtual enterprise network with VLANs, OSPF, and inter-VLAN routing for CCNA practice.", techs: ["Cisco", "VLAN", "OSPF", "Packet Tracer"], icon: "🌐", type: "personal", imageData: null },
-                    { id: "personal2", name: "Home Media Server with Docker", desc: "Set up Jellyfin, Pi-hole, and network monitoring stack on Ubuntu server.", techs: ["Docker", "Linux", "Networking"], icon: "🐳", type: "personal", imageData: null },
-                    { id: "personal3", name: "Python Network Automation Scripts", desc: "Scripts to automate network device backup and configuration via Netmiko.", techs: ["Python", "Netmiko", "SSH"], icon: "🐍", type: "personal", imageData: null }
-                ];
-                saveProjects();
+        // Projects data
+        const projects = [
+            {
+                name: "SCCM Software Deployment Optimization",
+                desc: "Redesigned application deployment process for 200+ corporate endpoints, reducing manual effort by 30% and cutting deployment failures.",
+                techs: ["SCCM", "PowerShell", "Windows Server"],
+                icon: "📦",
+                type: "professional"
+            },
+            {
+                name: "AD User Onboarding Automation",
+                desc: "Built PowerShell scripts that automated bulk AD user creation, group assignments, and onboarding workflows for new starters.",
+                techs: ["PowerShell", "Active Directory"],
+                icon: "👥",
+                type: "professional"
+            },
+            {
+                name: "Cisco Packet Tracer Enterprise Lab",
+                desc: "Built a multi-branch virtual enterprise network with VLANs, OSPF routing, inter-VLAN routing, and access control lists for CCNA certification practice.",
+                techs: ["Cisco", "VLAN", "OSPF", "Packet Tracer"],
+                icon: "🌐",
+                type: "personal"
+            },
+            {
+                name: "Home Media Server with Docker",
+                desc: "Deployed Jellyfin media server, Pi-hole DNS-level ad blocking, and network monitoring stack on Ubuntu — a homelab for learning DevOps-style infra.",
+                techs: ["Docker", "Linux", "Networking"],
+                icon: "🐳",
+                type: "personal"
+            },
+            {
+                name: "Python Network Automation Scripts",
+                desc: "Wrote Python scripts using Netmiko to automate backup and configuration of network devices over SSH, replacing manual CLI workflows.",
+                techs: ["Python", "Netmiko", "SSH"],
+                icon: "🐍",
+                type: "personal"
             }
-            
-            // Load skills
-            const storedSkills = localStorage.getItem('mzamo_skills_v2');
-            if(storedSkills) skillsArray = JSON.parse(storedSkills);
-            else skillsArray = [
-                { id: "skill1", title: "🖥️ Desktop Support", items: ["Windows 10/11", "Hardware Diagnostics", "ITIL Framework"] },
-                { id: "skill2", title: "☁️ M365 & AD", items: ["Exchange Online", "Active Directory", "Group Policy basics"] },
-                { id: "skill3", title: "🔧 Endpoint Mgmt", items: ["SCCM Administration", "BitLocker", "Patch Management"] },
-                { id: "skill4", title: "🌐 Networking (in progress)", items: ["TCP/IP, VLANs", "Cisco basics", "LAN/Wi-Fi troubleshooting"] }
-            ];
-            
-            // Load certs
-            const storedCerts = localStorage.getItem('mzamo_certs_v2');
-            if(storedCerts) certsArray = JSON.parse(storedCerts);
-            else certsArray = [
-                "🎓 BSc IT - Richfield", "📜 Google IT Support Professional", "🔒 IT Security: Defense against Digital Dark Arts",
-                "🌐 Cisco Intro to Cybersecurity", "🔌 Cisco Networking Basics", "⏳ ITIL v4 Foundation (in progress)", "☁️ AZ-900"
-            ];
-            
-            renderAll();
-        }
-        
-        function saveProjects() {
-            localStorage.setItem('mzamo_projects_separated', JSON.stringify(projectsArray));
-        }
-        
-        function saveSkills() {
-            localStorage.setItem('mzamo_skills_v2', JSON.stringify(skillsArray));
-        }
-        
-        function saveCerts() {
-            localStorage.setItem('mzamo_certs_v2', JSON.stringify(certsArray));
-        }
-        
-        function renderProjects() {
-            const professionalGrid = document.getElementById('professionalProjectsGrid');
-            const personalGrid = document.getElementById('personalProjectsGrid');
-            
-            const professional = projectsArray.filter(p => p.type === 'professional');
-            const personal = projectsArray.filter(p => p.type === 'personal');
-            
-            professionalGrid.innerHTML = professional.map(proj => renderProjectCardHTML(proj)).join('');
-            personalGrid.innerHTML = personal.map(proj => renderProjectCardHTML(proj)).join('');
-            
-            if(isAdmin) {
-                document.querySelectorAll('.delete-proj').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = btn.dataset.id;
-                        projectsArray = projectsArray.filter(p => p.id != id);
-                        saveProjects();
-                        renderProjects();
-                    });
-                });
-            }
-        }
-        
-        function renderProjectCardHTML(proj) {
-            const badgeClass = proj.type === 'professional' ? 'badge-professional' : 'badge-personal';
-            const badgeText = proj.type === 'professional' ? '💼 Professional' : '🚀 Personal Project';
-            return `
-                <div class="project-card">
-                    <div class="project-image">${proj.icon ? escapeHtml(proj.icon) : '📁'}</div>
-                    <div class="project-content">
-                        <span class="project-type-badge ${badgeClass}">${badgeText}</span>
-                        <h3>${escapeHtml(proj.name)}</h3>
-                        <p>${escapeHtml(proj.desc)}</p>
-                        <div>${(proj.techs || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
-                        ${isAdmin ? `<button class="btn-delete delete-proj" data-id="${proj.id}">🗑 Delete Project</button>` : ''}
+        ];
+
+        // Certs data
+        const certs = [
+            { icon: "🎓", name: "BSc IT", sub: "Richfield", pending: false },
+            { icon: "📜", name: "Google IT Support", sub: "Professional Certificate", pending: false },
+            { icon: "🔒", name: "IT Security", sub: "Defense against Digital Dark Arts", pending: false },
+            { icon: "🌐", name: "Cisco Intro to Cybersecurity", sub: "", pending: false },
+            { icon: "🔌", name: "Cisco Networking Basics", sub: "", pending: false },
+            { icon: "⏳", name: "ITIL v4 Foundation", sub: "In progress", pending: true },
+            { icon: "☁️", name: "AZ-900", sub: "Microsoft Azure Fundamentals", pending: false },
+            { icon: "🛡️", name: "SC-900", sub: "Microsoft Security, Compliance & Identity Fundamentals", pending: false }
+        ];
+
+        function renderProjects(filter = 'all') {
+            const grid = document.getElementById('projectsGrid');
+            const filtered = filter === 'all' ? projects : projects.filter(p => p.type === filter);
+            grid.innerHTML = filtered.map(p => `
+                <div class="project-card" data-type="${p.type}">
+                    <div class="project-image">${p.icon}</div>
+                    <div class="project-body">
+                        <span class="project-badge ${p.type === 'professional' ? 'badge-pro' : 'badge-personal'}">${p.type === 'professional' ? '💼 Professional' : '🚀 Personal'}</span>
+                        <h3>${p.name}</h3>
+                        <p>${p.desc}</p>
+                        <div class="tech-tags">${p.techs.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
                     </div>
                 </div>
-            `;
-        }
-        
-        function renderSkills() {
-            const grid = document.getElementById('skillsGrid');
-            grid.innerHTML = skillsArray.map(skill => `
-                <div class="skill-card" data-id="${skill.id}">
-                    <h3>${escapeHtml(skill.title)}</h3>
-                    <ul>${skill.items.map(i => `<li>${escapeHtml(i)}</li>`).join('')}</ul>
-                    ${isAdmin ? `<button class="btn-delete delete-skill" data-id="${skill.id}" style="margin-top:10px;">🗑 Remove Skill</button>` : ''}
-                </div>
             `).join('');
-            if(isAdmin) document.querySelectorAll('.delete-skill').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const id = btn.dataset.id;
-                    skillsArray = skillsArray.filter(s => s.id !== id);
-                    saveSkills();
-                    renderSkills();
-                });
-            });
         }
-        
+
+        function filterProjects(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            renderProjects(tab);
+        }
+
         function renderCerts() {
             const grid = document.getElementById('certsGrid');
-            grid.innerHTML = certsArray.map((cert, idx) => `
-                <div class="cert-badge" data-idx="${idx}">
-                    ${escapeHtml(cert)}
-                    ${isAdmin ? `<button class="btn-delete delete-cert" data-idx="${idx}" style="margin-top:10px; padding:0.2rem 0.8rem;">✖</button>` : ''}
+            grid.innerHTML = certs.map(c => `
+                <div class="cert-card">
+                    <div class="cert-icon">${c.icon}</div>
+                    <div class="cert-info">
+                        ${c.name}
+                        ${c.sub ? `<br><span style="font-size:0.75rem;color:var(--text3)">${c.sub}</span>` : ''}
+                        ${c.pending ? `<br><span class="pending">⏳ ${c.sub}</span>` : ''}
+                    </div>
                 </div>
             `).join('');
-            if(isAdmin) document.querySelectorAll('.delete-cert').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const idx = parseInt(btn.dataset.idx);
-                    certsArray.splice(idx, 1);
-                    saveCerts();
-                    renderCerts();
-                });
-            });
         }
-        
-        function renderAll() {
-            renderProjects();
-            renderSkills();
-            renderCerts();
-        }
-        
-        function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-        
-        function setAdminMode(status) {
-            isAdmin = status;
-            const body = document.getElementById('appBody');
-            if(isAdmin) body.classList.add('admin-mode');
-            else body.classList.remove('admin-mode');
-            document.getElementById('projectsAdminPanel').style.display = isAdmin ? 'block' : 'none';
-            document.getElementById('skillsAdminPanel').style.display = isAdmin ? 'block' : 'none';
-            document.getElementById('certsAdminPanel').style.display = isAdmin ? 'block' : 'none';
-            document.getElementById('modeStatus').innerHTML = isAdmin ? '👑 Admin Mode' : '👁️ View Mode';
-            document.getElementById('adminToggleBtn').innerHTML = isAdmin ? '🚪 Logout' : '🔐 Admin Login';
-            document.getElementById('viewOnlyBadge').style.opacity = isAdmin ? '0.3' : '1';
-            renderAll();
-        }
-        
-        function promptAdminLogin() {
-            const user = prompt("Admin Username:");
-            if(user !== "admin") return false;
-            const pass = prompt("Admin Password:");
-            if(pass !== "mzamo2025") return false;
-            return true;
-        }
-        
-        document.getElementById('adminToggleBtn').onclick = () => {
-            if(isAdmin) setAdminMode(false);
-            else if(promptAdminLogin()) setAdminMode(true);
-            else alert("Invalid credentials.");
-        };
-        
-        // Add skill
-        document.getElementById('addSkillBtn')?.addEventListener('click', () => {
-            const title = prompt("Skill card title:");
-            if(!title) return;
-            const items = prompt("List items separated by commas:");
-            if(!items) return;
-            skillsArray.push({ id: Date.now().toString(), title, items: items.split(',').map(i=>i.trim()) });
-            saveSkills();
-            renderSkills();
-        });
-        
-        // Add cert
-        document.getElementById('addCertBtn')?.addEventListener('click', () => {
-            const cert = prompt("New certification:");
-            if(cert) { certsArray.push(cert); saveCerts(); renderCerts(); }
-        });
-        
-        // Add project form
-        document.getElementById('projectForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if(!isAdmin) return alert("Admin only");
-            const name = document.getElementById('projName').value.trim();
-            const desc = document.getElementById('projDesc').value.trim();
-            const techRaw = document.getElementById('projTech').value;
-            const techs = techRaw.split(',').map(t=>t.trim());
-            const icon = document.getElementById('projIcon').value.trim() || '🚀';
-            const type = document.getElementById('projType').value;
-            const file = document.getElementById('projImage').files[0];
-            const newProj = { id: Date.now().toString(), name, desc, techs, icon, type, imageData: null };
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = ev => { newProj.imageData = ev.target.result; projectsArray.push(newProj); saveProjects(); renderProjects(); };
-                reader.readAsDataURL(file);
-            } else { projectsArray.push(newProj); saveProjects(); renderProjects(); }
-            document.getElementById('projectForm').reset();
-        });
-        
-        // Resume download
-        document.getElementById('downloadResumeBtn').onclick = () => {
-            const content = `Mzamo Sithole - IT Professional\nContact: mzamo.mduduzi.comfort@gmail.com\nIT Support Specialist with SCCM, AD, M365, and networking skills.`;
-            const blob = new Blob([content], {type:'application/pdf'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'Mzamo_Sithole_Resume.pdf';
-            a.click();
-            URL.revokeObjectURL(a.href);
-        };
-        
-        // Particles
-        for(let i=0;i<50;i++) {
-            const p = document.createElement('div');
-            p.className = 'particle-3d';
-            p.style.left = Math.random()*100+'%';
-            p.style.animationDelay = Math.random()*15+'s';
-            p.style.animationDuration = 8+Math.random()*12+'s';
-            p.style.width = 2+Math.random()*5+'px';
-            document.getElementById('particleField').appendChild(p);
-        }
-        
-        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
-        }));
-        
-        loadAllData();
-        setAdminMode(false);
+
+        // Init
+        renderProjects();
+        renderCerts();
     </script>
 </body>
 </html>
